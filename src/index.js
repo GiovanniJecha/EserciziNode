@@ -1,54 +1,58 @@
-/*const prompt = require("prompt-sync")();
-input = prompt("testo?");
-console.log("Ciao mondo " + input);*/
-
 const prompt = require("prompt-sync")();
+const os = require('os');
 
-class Macchina{
-    #m_targa;
-    #m_carburante;
-    #m_matricola;
-    #m_potenza;
-    constructor(targa, carburante, matricola, potenza){
-        this.targa = targa;
-        this.carburante = carburante;
-        this.matricola = matricola;
-        this.potenza = potenza;
+
+//https://it.wikiversity.org/wiki/File_Binari_%28superiori%29
+//https://www.mrw.it/javascript/node-js-buffer-cosa-come-usarli_12438.html
+
+class GestioneFileSynk {
+  fs = require('fs');
+  
+  constructor(nomeFile) {
+    this.nomeFile = nomeFile;
+  
+  }
+  ReadFile() {
+    try {
+      const data = this.fs.readFileSync(this.nomeFile,"utf8");
+      return data;
+    } catch (err) {
+      console.error(err);
     }
-    set targa(targa){
-        this.#m_targa = targa;
+  }; 
+  WriteFile(msg) {
+    try {
+      this.fs.writeFileSync(this.nomeFile, msg + " \r\n", { flag: 'a+' });
+      // file written successfully
+    } catch (err) {
+      console.error(err);
     }
-    set carburante(carburante){
-        this.#m_carburante = carburante;
+  };
+  AppendFile(msg) {
+    try {
+      this.fs.appendFileSync(this.nomeFile, msg + " \r\n"); // aggiunge il messaggio e un carattere di nuova linea al file
+      // file aggiornato con successo
+    } catch (err) {
+      console.error(err);
     }
-    set matricola(matricola){
-        this.#m_matricola = matricola;
-    }
-    set potenza(potenza){
-        this.#m_potenza = potenza;
-    }
-    get targa(){
-        return this.#m_targa;
-    }
-    get matricola(){
-        return this.#m_matricola;
-    }
-    get carburante(){
-        return this.#m_carburante;
-    }
-    get potenza(){
-        return this.#m_potenza;
-    }
-    toString(){
-        return "Targa : " + this.targa + "\nCarburante : " + this.carburante + "\nMatricola : " + this.matricola + "\nPotenza : " + this.potenza;
-    }
+  };
 }
 
-targa = prompt("Targa?");
-carburante = prompt("Carburante?");
-matricola = prompt("Matricola?");
-potenza = prompt("Potenza?");
+let gFs = new GestioneFileSynk("./src/prova.txt");
 
-let macchina = new Macchina(targa, carburante, matricola, potenza);
+console.log("........ReadFile..........");
+let data = gFs.ReadFile();
+console.log("File content:1", data);
+console.log("........WriteFile..........");
+input = prompt("Testo? ");
+gFs.AppendFile(input);
+console.log("........ReadFile..........");
+let data1 = gFs.ReadFile();
+console.log("File content:2", data1);
 
-console.log(macchina.toString());
+const lines = data1.split(os.EOL);  // or: text.split(/\r?\n/)
+
+console.log(lines);  // ['line 1', 'line 2']
+
+//let gFs1 = new GestioneFileSynk("./prova1.txt");
+//gFs1.WriteFile("cccc");
