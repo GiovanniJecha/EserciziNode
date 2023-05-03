@@ -81,7 +81,6 @@ console.log("File content:1", data);
 //console.log("........ReadFile..........");
 //let data1 = gFs.ReadFile();
 //console.log("File content:2", data1);
-
 //const lines = data1.split(os.EOL);  // or: text.split(/\r?\n/)
 const lines = data.split(os.EOL);
 let p1 = lines[1].split(os.EOL);
