@@ -87,7 +87,7 @@ const lines = data.split(os.EOL);
 let p1 = lines[1].split(os.EOL);
 //console.log(persona);
 let persona = p1[0].split(",");
-console.log(persona);
+console.log("Array della persona -- " + persona);
 //console.log(lines);  // ['line 1', 'line 2']
 let nome = persona[0];
 let cognome = persona[1];
