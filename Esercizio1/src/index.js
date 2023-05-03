@@ -74,24 +74,33 @@ let gFs = new GestioneFileSynk("./src/Persona.csv");
 
 console.log("........ReadFile..........");
 let data = gFs.ReadFile();
-console.log("File content:1", data);
+console.log("Contenuto File\n" + data);
 //console.log("........WriteFile..........");
 //input = prompt("Testo? ");
 //gFs.AppendFile(input);
 //console.log("........ReadFile..........");
 //let data1 = gFs.ReadFile();
 //console.log("File content:2", data1);
+
 //const lines = data1.split(os.EOL);  // or: text.split(/\r?\n/)
 const lines = data.split(os.EOL);
 let p1 = lines[1].split(os.EOL);
-//console.log(persona);
+let p2 = lines[2].split(os.EOL);
+let p3 = lines[3].split(os.EOL);
+//console.log(p3);
 let persona = p1[0].split(",");
-console.log("Array della persona -- " + persona);
+let persona1 = p2[0].split(",");
+let persona2 = p3[0].split(",");
+//console.log(persona2);
+let persone = [persona, persona1, persona2];
+console.log("Array delle persone -- " + persone[1]); //Alessandro,Verdi,15/03/2002
 //console.log(lines);  // ['line 1', 'line 2']
-let nome = persona[0];
-let cognome = persona[1];
-let data_nascita = persona[2];
-let persona1 = new Persona(nome, cognome, data_nascita);
-console.log(persona1.toString());
+let nuovaPersona = new Persona(persone[0][0], persone[0][1], persone[0][2]);
+let nuovaPersona1 = new Persona(persone[1][0], persone[1][1], persone[1][2]);
+let nuovaPersona2 = new Persona(persone[2][0], persone[2][1], persone[2][2]);
+let oggetti = [nuovaPersona, nuovaPersona1, nuovaPersona2];
+for (i = 0; i < oggetti.length; i++) {
+  console.log(oggetti[i].toString());  
+}
 //let gFs1 = new GestioneFileSynk("./prova1.txt");
 //gFs1.WriteFile("cccc");
