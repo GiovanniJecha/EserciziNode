@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start" : "node ./src/ImportFileJson.js"
+    "start" : "node ./src/ImportFileJSON.js"
   },
   "keywords": [],
   "author": "",
