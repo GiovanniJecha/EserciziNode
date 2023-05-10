@@ -2,9 +2,8 @@
   {
     "person": {
       "name": "Alice",
-      "country": "Austria",
-      "tasks": ["develop", "design", "test"],
-      "age": 30
+      "surname": "Verdi",
+      "date": "17/12/1990"
     }
   }
 ]
