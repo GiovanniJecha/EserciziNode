@@ -1,12 +1,10 @@
 [
-    {
-      "name": "Bob",
-      "age": 32,
-      "hobbies": ["soccer", "guitar", "cooking"]
-    },
-    {
-      "name": "Carol",
-      "age": 28,
-      "hobbies": ["painting", "yoga", "gardening"]
+  {
+    "person": {
+      "name": "Alice",
+      "country": "Austria",
+      "tasks": ["develop", "design", "test"],
+      "age": 30
     }
+  }
 ]
