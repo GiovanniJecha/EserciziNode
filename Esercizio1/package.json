@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start" : "node ./src/Lab023"
+    "start" : "node ./src/Lab024"
   },
   "keywords": [],
   "author": "",
