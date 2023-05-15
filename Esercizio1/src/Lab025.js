@@ -31,7 +31,7 @@ class Istituzione{
     persone;
     constructor(nome, persone){
         this.nome = nome;
-        this.persone = [];
+        this.persone = persone;
     }
     toString(){
         return "Nome : " + this.nome + "\nPersone : " + this.persone;    
@@ -66,9 +66,10 @@ function importJsonFile() {
     let persona = new Persona(data.nome, data.cognome, data.data_nascita, data.istituzione);
     let persone = [];
     persone.push(persona);
+    console.log(persone);
     let istituzione = new Istituzione(persona.istituzione, persone);
-    console.log(persona);
-    console.log(istituzione);
+    //console.log(persona);
+    //console.log(istituzione);
     console.log(istituzione.toString());
   }
   
