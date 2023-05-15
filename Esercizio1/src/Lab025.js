@@ -42,13 +42,15 @@ class Persona{
   nome;
   cognome;
   data_nascita;
-  constructor(nome, cognome, data_nascita){
+  istituzione;
+  constructor(nome, cognome, data_nascita, istituzione){
       this.nome = nome;
       this.cognome = cognome;
       this.data_nascita = data_nascita;
+      this.istituzione = istituzione;
   }
   toString(){
-      return "Nome : " + this.nome + "\nCognome : " + this.cognome + "\nData nascita : " + this.data_nascita;
+      return "Nome : " + this.nome + "\nCognome : " + this.cognome + "\nData nascita : " + this.data_nascita + "\nIstituzione : " + this.istituzione;
   }
 }
 
@@ -61,8 +63,13 @@ function importJsonFile() {
     let data = JSON.parse(gFsImport.ReadFile()); // usa JSON.parse per convertire il testo JSON in un oggetto JavaScript
     //gFs.WriteFile(data);
     console.log(`File JSON ${fileName} importato con successo.`);
-    let persona = new Persona(data.nome, data.cognome, data.data_nascita);
+    let persona = new Persona(data.nome, data.cognome, data.data_nascita, data.istituzione);
+    let persone = [];
+    persone.push(persona);
+    let istituzione = new Istituzione(persona.istituzione, persone);
     console.log(persona);
+    console.log(istituzione);
+    console.log(istituzione.toString());
   }
   
   function exportJsonFile() { //da rivedere
