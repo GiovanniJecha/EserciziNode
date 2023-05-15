@@ -59,18 +59,19 @@ class Persona{
 }
 
 //let gFs = new GestioneFileSynk("./src/Persona.js");
-let persone = [];
+let fileName;
 
 function importJsonFile() {
-    const fileName = prompt("Nome del file JSON da importare: ");
+    fileName = prompt("Nome del file JSON da importare: ");
     let gFsImport = new GestioneFileSynk(fileName);
     let data = JSON.parse(gFsImport.ReadFile()); // usa JSON.parse per convertire il testo JSON in un oggetto JavaScript
     //gFs.WriteFile(data);
     console.log(`File JSON ${fileName} importato con successo.`);
     let persona = new Persona(data.name, data.surname, data.date);
+    console.log(persona.toString());
   }
   
-  function exportJsonFile() {
+  function exportJsonFile() { //da rivedere
     const fileName = prompt("Nome del file JSON da esportare: ");
     let data = gFs.ReadFile();
     let json = JSON.stringify(data); // usa JSON.stringify per convertire l'oggetto JavaScript in una stringa JSON
@@ -81,7 +82,9 @@ function importJsonFile() {
   
   function countOccurrences() {
     const word = prompt("Parola da cercare: ");
-    let data = gFs.ReadFile();
+    let read = new GestioneFileSynk(fileName);
+    let data = JSON.parse(read.ReadFile());
+    //let data = gFs.ReadFile();
     // data è un oggetto JavaScript con le proprietà nome, cognome e data_di_nascita
     let count = 0;
     for (let key in data) { // usa un ciclo for...in per iterare sulle proprietà dell'oggetto
