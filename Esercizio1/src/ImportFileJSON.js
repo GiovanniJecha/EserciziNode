@@ -58,13 +58,13 @@ class Persona{
   }
 }
 
-let gFs = new GestioneFileSynk("./src/Persona.js");
+//let gFs = new GestioneFileSynk("./src/Persona.js");
 
 function importJsonFile() {
     const fileName = prompt("Nome del file JSON da importare: ");
     let gFsImport = new GestioneFileSynk(fileName);
     let data = JSON.parse(gFsImport.ReadFile()); // usa JSON.parse per convertire il testo JSON in un oggetto JavaScript
-    gFs.WriteFile(data);
+    //gFs.WriteFile(data);
     console.log(`File JSON ${fileName} importato con successo.`);
     console.log(data);
   }
