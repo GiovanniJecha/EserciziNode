@@ -1,5 +1,5 @@
 {
-  "name": "Bob",
-  "surname": "Marley",
-  "date": "17/12/2000"
+  "nome": "Bob",
+  "cognome": "Marley",
+  "data_nascita": "17/12/2000"
 }

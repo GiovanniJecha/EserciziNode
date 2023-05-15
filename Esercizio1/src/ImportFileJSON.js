@@ -27,31 +27,13 @@ class GestioneFileSynk {
 }
 
 class Persona{
-  #p_nome;
-  #p_cognome;
-  #p_data_nascita;
+  nome;
+  cognome;
+  data_nascita;
   constructor(nome, cognome, data_nascita){
       this.nome = nome;
       this.cognome = cognome;
       this.data_nascita = data_nascita;
-  }
-  set nome(name){
-      this.#p_nome = name;
-  }
-  set cognome(surname){
-      this.#p_cognome = surname;
-  }
-  set data_nascita(date){
-      this.#p_data_nascita = date;
-  }
-  get nome(){
-      return this.#p_nome
-  }
-  get cognome(){
-      return this.#p_cognome
-  }
-  get data_nascita(){
-      return this.#p_data_nascita
   }
   toString(){
       return "Nome : " + this.nome + "\nCognome : " + this.cognome + "\nData nascita : " + this.data_nascita;
@@ -67,8 +49,8 @@ function importJsonFile() {
     let data = JSON.parse(gFsImport.ReadFile()); // usa JSON.parse per convertire il testo JSON in un oggetto JavaScript
     //gFs.WriteFile(data);
     console.log(`File JSON ${fileName} importato con successo.`);
-    let persona = new Persona(data.name, data.surname, data.date);
-    console.log(persona.toString());
+    let persona = new Persona(data.nome, data.cognome, data.data_nascita);
+    console.log(persona);
   }
   
   function exportJsonFile() { //da rivedere
