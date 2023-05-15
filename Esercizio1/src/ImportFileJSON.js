@@ -66,6 +66,7 @@ function importJsonFile() {
     let data = JSON.parse(gFsImport.ReadFile()); // usa JSON.parse per convertire il testo JSON in un oggetto JavaScript
     gFs.WriteFile(data);
     console.log(`File JSON ${fileName} importato con successo.`);
+    console.log(data);
   }
   
   function exportJsonFile() {
@@ -89,8 +90,6 @@ function importJsonFile() {
     }
     console.log(`La parola "${word}" compare ${count} volte nel file JSON.`);
   }
-
-  console.log();
 
 while (true) {
   console.log("Seleziona un'opzione:");
