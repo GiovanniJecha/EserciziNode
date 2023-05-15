@@ -92,9 +92,9 @@ function importJsonFile() {
 
 while (true) {
   console.log("Seleziona un'opzione:");
-  console.log("1. Importa un file CSV");
-  console.log("2. Esporta un file CSV");
-  console.log("3. Conta le occorrenze di una parola nel file CSV");
+  console.log("1. Importa un file JSON");
+  console.log("2. Esporta un file JSON");
+  console.log("3. Conta le occorrenze di una parola nel file JSON");
   console.log("0. Esci");
   const choice = prompt("Scelta: ");
   switch (choice) {
