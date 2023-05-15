@@ -90,6 +90,8 @@ function importJsonFile() {
     console.log(`La parola "${word}" compare ${count} volte nel file JSON.`);
   }
 
+  console.log();
+
 while (true) {
   console.log("Seleziona un'opzione:");
   console.log("1. Importa un file JSON");

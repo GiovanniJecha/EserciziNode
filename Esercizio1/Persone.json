@@ -1,9 +1,5 @@
-[
-  {
-    "person": {
-      "name": "Alice",
-      "surname": "Verdi",
-      "date": "17/12/1990"
-    }
-  }
-]
+{
+  "name": "Bob",
+  "age": 32,
+  "hobbies": ["soccer", "guitar", "cooking"]
+}
