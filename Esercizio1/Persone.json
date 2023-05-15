@@ -1,5 +1,5 @@
 {
   "name": "Bob",
-  "age": 32,
-  "hobbies": ["soccer", "guitar", "cooking"]
+  "surname": "Marley",
+  "date": "17/12/2000"
 }
