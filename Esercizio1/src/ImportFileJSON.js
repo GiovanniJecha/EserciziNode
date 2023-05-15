@@ -67,7 +67,6 @@ function importJsonFile() {
     gFs.WriteFile(data);
     console.log(`File JSON ${fileName} importato con successo.`);
     console.log(data);
-    
   }
   
   function exportJsonFile() {
