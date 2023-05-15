@@ -58,7 +58,7 @@ class Persona{
   }
 }
 
-let gFs = new GestioneFileSynk("./src/Persona.csv");
+let gFs = new GestioneFileSynk("./src/Persona.json");
 
 function importJsonFile() {
     const fileName = prompt("Nome del file JSON da importare: ");
