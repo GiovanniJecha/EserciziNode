@@ -58,7 +58,7 @@ class Persona{
   }
 }
 
-let gFs = new GestioneFileSynk("./src/Persona.json");
+let gFs = new GestioneFileSynk("./src/Persona.js");
 
 function importJsonFile() {
     const fileName = prompt("Nome del file JSON da importare: ");
