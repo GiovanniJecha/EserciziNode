@@ -57,10 +57,12 @@ while (true) {
     const choice = prompt("Scelta: ");
     switch (choice) {
       case "1":
-        importa();
+        let nameFile = prompt("Come si chiama il file : ");
+        importa(nameFile);
         break;
       case "2":
-        esporta();
+        let fileName = prompt("Come vuoi chiamare il file : ");
+        esporta(fileName);
         break;
       case "3":
         const parola = prompt("Inserisci la parola da cercare: ");
