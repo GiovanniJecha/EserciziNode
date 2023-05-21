@@ -1,118 +1,95 @@
-const prompt = require("prompt-sync")();
-const os = require('os');
+const prompt = require('prompt-sync')();
+const fs = require('fs');
 
-class GestioneFileSynk {
-  fs = require('fs');
-  
-  constructor(nomeFile) {
-    this.nomeFile = nomeFile;
-  
+class Persona {
+  constructor(nome, cognome, data_nascita) {
+    this.nome = nome;
+    this.cognome = cognome;
+    this.data_nascita = data_nascita;
   }
-  ReadFile() {
-    try {
-      const data = this.fs.readFileSync(this.nomeFile,"utf8");
-      return data;
-    } catch (err) {
-      console.error(err);
-    }
-  }; 
-  WriteFile(msg) {
-    try {
-      this.fs.writeFileSync(this.nomeFile, msg + " \r\n", { flag: 'a+' });
-      // file written successfully
-    } catch (err) {
-      console.error(err);
-    }
-  };
-}
-
-class Istituzione{
-    nome;
-    persone;
-    constructor(nome, persone){
-        this.nome = nome;
-        this.persone = persone;
-    }
-    toString(){
-        return "Nome : " + this.nome + "\nPersone : " + this.persone;    
-    }
-}
-
-class Persona{
-  nome;
-  cognome;
-  data_nascita;
-  istituzione;
-  constructor(nome, cognome, data_nascita, istituzione){
-      this.nome = nome;
-      this.cognome = cognome;
-      this.data_nascita = data_nascita;
-      this.istituzione = istituzione;
-  }
-  toString(){
-      return "Nome : " + this.nome + "\nCognome : " + this.cognome + "\nData nascita : " + this.data_nascita + "\nIstituzione : " + this.istituzione;
+  toString() {
+    return 'Nome : ' + this.nome + '\nCognome : ' + this.cognome + '\nData nascita : ' + this.data_nascita
   }
 }
 
-//let gFs = new GestioneFileSynk("./src/Persona.js");
-let fileName;
+class Istituzione {
+  constructor(nome) {
+    this.nome = nome;
+    this.personale = [];
+  }
+  aggiungiPersona(persona) {
+    this.personale.push(persona);
+  }
+}
 
-function importJsonFile() {
-    fileName = prompt("Nome del file JSON da importare: ");
-    let gFsImport = new GestioneFileSynk(fileName);
-    let data = JSON.parse(gFsImport.ReadFile()); // usa JSON.parse per convertire il testo JSON in un oggetto JavaScript
-    //gFs.WriteFile(data);
-    console.log(`File JSON ${fileName} importato con successo.`);
-    let persona = new Persona(data.nome, data.cognome, data.data_nascita, data.istituzione);
-    let persone = [];
-    persone.push(persona);
-    console.log(persone);
-    let istituzione = new Istituzione(persona.istituzione, persone);
-    //console.log(persona);
-    //console.log(istituzione);
-    console.log(istituzione.toString());
-  }
-  
-  function exportJsonFile() { //da rivedere
-    const fileName = prompt("Nome del file JSON da esportare: ");
-    let data = gFs.ReadFile();
-    let json = JSON.stringify(data); // usa JSON.stringify per convertire l'oggetto JavaScript in una stringa JSON
-    let gFsExport = new GestioneFileSynk(fileName);
-    gFsExport.WriteFile(json);
-    console.log(`File JSON esportato con successo nel file ${fileName}.`);
-  }
-  
-  function countOccurrences() {
-    const word = prompt("Parola da cercare: ");
-    let read = new GestioneFileSynk(fileName);
-    let data = JSON.parse(read.ReadFile());
-    //let data = gFs.ReadFile();
-    // data è un oggetto JavaScript con le proprietà nome, cognome e data_di_nascita
-    let count = 0;
-    for (let key in data) { // usa un ciclo for...in per iterare sulle proprietà dell'oggetto
-      if (data[key] == word) { // controlla se il valore della proprietà corrisponde alla parola cercata
-        count++;
-      }
-    }
-    console.log(`La parola "${word}" compare ${count} volte nel file JSON.`);
-  }
+// Esportazione in formato JSON
+function esporta(istituzione) {
+  const jsonContent = JSON.stringify(istituzione);
+  fs.writeFileSync(`${istituzione.nome}.json`, jsonContent);
+}
+
+// Importazione da formato JSON
+function importa(nomeIstituzione) {
+  const jsonImport = fs.readFileSync(`${nomeIstituzione}.json`, 'utf8');
+  const importedIstituzioneData = JSON.parse(jsonImport);
+  const importedIstituzione = new Istituzione(importedIstituzioneData.nome);
+  importedIstituzioneData.personale.forEach(personaData => {
+    const importedPersona = new Persona(personaData.nome, personaData.cognome, personaData.data_nascita);
+    importedIstituzione.aggiungiPersona(importedPersona);
+  });
+  return importedIstituzione;
+}
+
+let istituzioni = [];
 
 while (true) {
   console.log("Seleziona un'opzione:");
-  console.log("1. Importa un file JSON");
-  console.log("2. Esporta un file JSON");
-  console.log("3. Conta le occorrenze di una parola nel file JSON");
+  console.log("1. Crea un'istituzione");
+  console.log("2. Aggiungi una persona a un'istituzione");
+  console.log("3. Esporta un'istituzione in formato JSON");
+  console.log("4. Importa un'istituzione da formato JSON");
   console.log("0. Esci");
   const choice = prompt("Scelta: ");
   switch (choice) {
     case "1":
-      importJsonFile();
+      const nomeIstituzione = prompt("Inserisci il nome dell'istituzione: ");
+      const nuovaIstituzione = new Istituzione(nomeIstituzione);
+      istituzioni.push(nuovaIstituzione);
+      console.log(`Istituzione "${nomeIstituzione}" creata.`);
       break;
     case "2":
-      exportJsonFile();
+      const nomeIstituzioneDaAggiungere = prompt("Inserisci il nome dell'istituzione a cui aggiungere una persona: ");
+      const istituzioneDaAggiungere = istituzioni.find(i => i.nome === nomeIstituzioneDaAggiungere);
+      if (istituzioneDaAggiungere) {
+        const nomePersona = prompt('Inserisci il nome della persona: ');
+        const cognomePersona = prompt('Inserisci il cognome della persona: ');
+        const dataNascitaPersona = prompt('Inserisci la data di nascita della persona: ');
+        const nuovaPersona = new Persona(nomePersona, cognomePersona, dataNascitaPersona);
+        istituzioneDaAggiungere.aggiungiPersona(nuovaPersona);
+        console.log(`Persona "${nomePersona} ${cognomePersona}" aggiunta all'istituzione "${nomeIstituzioneDaAggiungere}".`);
+      } else {
+        console.log(`Nessuna istituzione trovata con il nome "${nomeIstituzioneDaAggiungere}".`);
+      }
       break;
     case "3":
-      countOccurrences();
+      const nomeIstituzionedaEsportare = prompt("Inserisci il nome dell'istituzioneda esportare in formato JSON: ");
+      const istituzionedaEsportare = istituzioni.find(i => i.nome === nomeIstituzionedaEsportare);
+      if (istituzionedaEsportare) {
+        esporta(istituzionedaEsportare);
+        console.log(`Istituzione "${nomeIstituzionedaEsportare}" esportata in formato JSON.`);
+      } else {
+        console.log(`Nessuna istituzione trovata con il nome "${nomeIstituzionedaEsportare}".`);
+      }
+      break;
+    case "4":
+      const nomeIstituzionedaImportare = prompt("Inserisci il nome dell'istituzioneda importare da formato JSON: ");
+      try {
+        const istituzionedaImportare = importa(nomeIstituzionedaImportare);
+        istituzioni.push(istituzionedaImportare);
+        console.log(`Istituzione "${nomeIstituzionedaImportare}" importata da formato JSON.`);
+      } catch (error) {
+        console.log(`Errore durante l'importazione dell'istituzione "${nomeIstituzionedaImportare}" da formato JSON.`);
+      }
       break;
     case "0":
       console.log("Programma terminato.");
