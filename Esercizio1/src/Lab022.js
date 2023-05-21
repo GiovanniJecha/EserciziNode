@@ -33,10 +33,26 @@ function importa(){
     console.log(importedPersona.toString());
 }
 
+function contaOccorrenze(parola) {
+  const csvImport = fs.readFileSync('persona.csv', 'utf8');
+  const righe = csvImport.split('\n');
+  let conteggio = 0;
+  for (let i = 0; i < righe.length; i++) {
+    const parole = righe[i].split(',');
+    for (let j = 0; j < parole.length; j++) {
+      if (parole[j] === parola) {
+        conteggio++;
+      }
+    }
+  }
+  console.log(`La parola "${parola}" compare ${conteggio} volte nel file CSV.`);
+}
+
 while (true) {
     console.log("Seleziona un'opzione:");
     console.log("1. Importa un file CSV");
     console.log("2. Esporta un file CSV");
+    console.log("3. Conta occorrenze in un file CSV");
     console.log("0. Esci");
     const choice = prompt("Scelta: ");
     switch (choice) {
@@ -45,6 +61,10 @@ while (true) {
         break;
       case "2":
         esporta();
+        break;
+      case "3":
+        const parola = prompt("Inserisci la parola da cercare: ");
+        contaOccorrenze(parola);
         break;
       case "0":
         console.log("Programma terminato.");
