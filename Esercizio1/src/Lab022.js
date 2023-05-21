@@ -45,7 +45,7 @@ function contaOccorrenze(parola) {
       }
     }
   }
-  console.log(`La parola "${parola}" compare ${conteggio} volte nel file CSV.`);
+  console.log('La parola ' + parola + ' compare ' + conteggio + 'volte nel file CSV.');
 }
 
 while (true) {
