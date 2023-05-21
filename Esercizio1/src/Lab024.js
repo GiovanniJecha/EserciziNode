@@ -13,26 +13,26 @@ class Persona {
 }
 
 // Esportazione in formato JSON
-function esporta() {
+function esporta(nomeFile) {
   const nome = prompt('Inserisci il nome: ');
   const cognome = prompt('Inserisci il cognome: ');
   const data_nascita = prompt('Inserisci la data di nascita: ');
   const persona = new Persona(nome, cognome, data_nascita);
   console.log(persona.toString());
   const jsonContent = JSON.stringify(persona);
-  fs.writeFileSync('persona.json', jsonContent);
+  fs.writeFileSync(nomeFile + '.json', jsonContent);
 }
 
 // Importazione da formato JSON
-function importa() {
-  const jsonImport = fs.readFileSync('persona.json', 'utf8');
+function importa(nomeFile) {
+  const jsonImport = fs.readFileSync(nomeFile + '.json', 'utf8');
   const importedPersonaData = JSON.parse(jsonImport);
   const importedPersona = new Persona(importedPersonaData.nome, importedPersonaData.cognome, importedPersonaData.data_nascita);
   console.log(importedPersona.toString());
 }
 
-function contaOccorrenze(parola) {
-  const jsonImport = fs.readFileSync('persona.json', 'utf8');
+function contaOccorrenze(fileName, parola) {
+  const jsonImport = fs.readFileSync(fileName + '.json', 'utf8');
   const importedPersonaData = JSON.parse(jsonImport);
   let conteggio = 0;
   for (let key in importedPersonaData) {
@@ -52,14 +52,17 @@ while (true) {
     const choice = prompt("Scelta: ");
     switch (choice) {
       case "1":
-        importa();
+        let nameFile = prompt("Come si chiama il file : ");
+        importa(nameFile);
         break;
       case "2":
-        esporta();
+        let fileName = prompt("Come vuoi chiamare il file : ");
+        esporta(fileName);
         break;
       case "3":
+        let file_Name = prompt("In quale file vuoi cercare : ");
         const parola = prompt("Inserisci la parola da cercare: ");
-        contaOccorrenze(parola);
+        contaOccorrenze(file_Name, parola);
         break;
       case "0":
         console.log("Programma terminato.");

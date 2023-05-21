@@ -33,8 +33,8 @@ function importa(nomeFile){
     console.log(importedPersona.toString());
 }
 
-function contaOccorrenze(parola) {
-  const csvImport = fs.readFileSync('persona.csv', 'utf8');
+function contaOccorrenze(nomeFile, parola) {
+  const csvImport = fs.readFileSync(nomeFile + '.csv', 'utf8');
   const righe = csvImport.split('\n');
   let conteggio = 0;
   for (let i = 0; i < righe.length; i++) {
@@ -65,8 +65,9 @@ while (true) {
         esporta(fileName);
         break;
       case "3":
+        let file_Name = prompt("In quale file vuoi cercare : ");
         const parola = prompt("Inserisci la parola da cercare: ");
-        contaOccorrenze(parola);
+        contaOccorrenze(file_Name, parola);
         break;
       case "0":
         console.log("Programma terminato.");
