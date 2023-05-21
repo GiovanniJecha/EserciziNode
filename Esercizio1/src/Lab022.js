@@ -13,20 +13,20 @@ class Persona {
 }
 
 // Esportazione in formato CSV
-function esporta(){
+function esporta(nomeFile){
     const nome = prompt('Inserisci il nome: ');
     const cognome = prompt('Inserisci il cognome: ');
     const data_nascita = prompt('Inserisci la data di nascita: ');
     const persona = new Persona(nome, cognome, data_nascita);
     console.log(persona.toString());
     const csvContent = `nome,cognome,data_nascita\n${persona.nome},${persona.cognome},${persona.data_nascita}`;
-    fs.writeFileSync('persona.csv', csvContent);
+    fs.writeFileSync(nomeFile + '.csv', csvContent);
 }
 
 
 // Importazione da formato CSV
-function importa(){
-    const csvImport = fs.readFileSync('persona.csv', 'utf8');
+function importa(nomeFile){
+    const csvImport = fs.readFileSync(nomeFile + '.csv', 'utf8');
     const [header, data] = csvImport.split('\n');
     const [importedNome, importedCognome, importedDataNascita] = data.split(',');
     const importedPersona = new Persona(importedNome, importedCognome, importedDataNascita);

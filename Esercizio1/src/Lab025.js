@@ -25,15 +25,15 @@ class Istituzione {
 // Esportazione in formato JSON
 function esporta(istituzione) {
   const jsonContent = JSON.stringify(istituzione);
-  fs.writeFileSync(`${istituzione.nome}.json`, jsonContent);
+  fs.writeFileSync(istituzione.nome + '.json', jsonContent);
 }
 
 // Importazione da formato JSON
 function importa(nomeIstituzione) {
-  const jsonImport = fs.readFileSync(`${nomeIstituzione}.json`, 'utf8');
+  const jsonImport = fs.readFileSync(nomeIstituzione + '.json', 'utf8');
   const importedIstituzioneData = JSON.parse(jsonImport);
   const importedIstituzione = new Istituzione(importedIstituzioneData.nome);
-  importedIstituzioneData.personale.forEach(personaData => {
+  importedIstituzioneData.personale.forEach(function(personaData) {
     const importedPersona = new Persona(personaData.nome, personaData.cognome, personaData.data_nascita);
     importedIstituzione.aggiungiPersona(importedPersona);
   });
@@ -55,30 +55,30 @@ while (true) {
       const nomeIstituzione = prompt("Inserisci il nome dell'istituzione: ");
       const nuovaIstituzione = new Istituzione(nomeIstituzione);
       istituzioni.push(nuovaIstituzione);
-      console.log(`Istituzione "${nomeIstituzione}" creata.`);
+      console.log('Istituzione "' + nomeIstituzione + '" creata.');
       break;
     case "2":
       const nomeIstituzioneDaAggiungere = prompt("Inserisci il nome dell'istituzione a cui aggiungere una persona: ");
-      const istituzioneDaAggiungere = istituzioni.find(i => i.nome === nomeIstituzioneDaAggiungere);
+      const istituzioneDaAggiungere = istituzioni.find(function(i) { return i.nome === nomeIstituzioneDaAggiungere });
       if (istituzioneDaAggiungere) {
         const nomePersona = prompt('Inserisci il nome della persona: ');
         const cognomePersona = prompt('Inserisci il cognome della persona: ');
         const dataNascitaPersona = prompt('Inserisci la data di nascita della persona: ');
         const nuovaPersona = new Persona(nomePersona, cognomePersona, dataNascitaPersona);
         istituzioneDaAggiungere.aggiungiPersona(nuovaPersona);
-        console.log(`Persona "${nomePersona} ${cognomePersona}" aggiunta all'istituzione "${nomeIstituzioneDaAggiungere}".`);
+        console.log('Persona "' + nomePersona + ' ' + cognomePersona + '" aggiunta all\'istituzione "' + nomeIstituzioneDaAggiungere + '".');
       } else {
-        console.log(`Nessuna istituzione trovata con il nome "${nomeIstituzioneDaAggiungere}".`);
+        console.log('Nessuna istituzione trovata con il nome "' + nomeIstituzioneDaAggiungere + '".');
       }
       break;
     case "3":
       const nomeIstituzionedaEsportare = prompt("Inserisci il nome dell'istituzioneda esportare in formato JSON: ");
-      const istituzionedaEsportare = istituzioni.find(i => i.nome === nomeIstituzionedaEsportare);
+      const istituzionedaEsportare = istituzioni.find(function(i) { return i.nome === nomeIstituzionedaEsportare });
       if (istituzionedaEsportare) {
         esporta(istituzionedaEsportare);
-        console.log(`Istituzione "${nomeIstituzionedaEsportare}" esportata in formato JSON.`);
+        console.log('Istituzione "' + nomeIstituzionedaEsportare + '" esportata in formato JSON.');
       } else {
-        console.log(`Nessuna istituzione trovata con il nome "${nomeIstituzionedaEsportare}".`);
+        console.log('Nessuna istituzione trovata con il nome "' + nomeIstituzionedaEsportare + '".');
       }
       break;
     case "4":
@@ -86,9 +86,9 @@ while (true) {
       try {
         const istituzionedaImportare = importa(nomeIstituzionedaImportare);
         istituzioni.push(istituzionedaImportare);
-        console.log(`Istituzione "${nomeIstituzionedaImportare}" importata da formato JSON.`);
+        console.log('Istituzione "' + nomeIstituzionedaImportare + '" importata da formato JSON.');
       } catch (error) {
-        console.log(`Errore durante l'importazione dell'istituzione "${nomeIstituzionedaImportare}" da formato JSON.`);
+        console.log('Errore durante l\'importazione dell\'istituzione "' + nomeIstituzionedaImportare + '" da formato JSON.');
       }
       break;
     case "0":
