@@ -45,9 +45,9 @@ function contaOccorrenze(parola) {
 
 while (true) {
     console.log("Seleziona un'opzione:");
-    console.log("1. Importa un file CSV");
-    console.log("2. Esporta un file CSV");
-    console.log("3. Conta occorrenze in un file CSV");
+    console.log("1. Importa un file JSON");
+    console.log("2. Esporta un file JSON");
+    console.log("3. Conta occorrenze in un file JSON");
     console.log("0. Esci");
     const choice = prompt("Scelta: ");
     switch (choice) {
