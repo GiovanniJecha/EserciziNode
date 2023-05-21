@@ -11,7 +11,8 @@ class Persona {
   }
 }
 
-const nome = prompt('Inserisci il nome: ');
-const cognome = prompt('Inserisci il cognome: ');
-const persona = new Persona(nome, cognome);
+let nome = prompt('Inserisci il nome: ');
+let cognome = prompt('Inserisci il cognome: ');
+let data_nascita = prompt('Inserisci la data di nascita: ');
+let persona = new Persona(nome, cognome, data_nascita);
 console.log(persona.toString());
