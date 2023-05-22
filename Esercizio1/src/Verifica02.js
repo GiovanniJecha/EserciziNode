@@ -53,7 +53,6 @@ class Biblioteca {
       case "2":
         let nomeBibliotecaDaAggiungere = prompt("Inserisci il nome della biblioteca a cui aggiungere i libri: ");
         if (nomeBibliotecaDaAggiungere == biblioteca.nome) {
-          //let lista = prompt("Percorso file dei libri : ");
           importa();
         } else {
           console.log('Nessuna biblioteca trovata con il nome "' + nomeBibliotecaDaAggiungere + '".');
