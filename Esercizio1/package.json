@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start" : "node ./src/Verifica01.js"
+    "start" : "node ./src/Verifica02.js"
   },
   "keywords": [],
   "author": "",
