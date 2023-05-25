@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start" : "node ./src/Lab025.js"
+    "start" : "node ./src/Rework_Lab025.js"
   },
   "keywords": [],
   "author": "",
