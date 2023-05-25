@@ -48,13 +48,9 @@ class Biblioteca {
     const choice = prompt("Scelta: ");
     switch (choice) {
       case "1":
-        if (biblioteca != null){
             let nomeBiblioteca = prompt("Inserisci il nome che vuoi dare alla biblioteca : ");
             biblioteca = new Biblioteca(nomeBiblioteca);
             console.log('Biblioteca "' + biblioteca.nome + '" creata.');
-        } else {
-            console.log("Devi prima creare la biblioteca!");
-        }
         break;
       case "2":
         if (biblioteca != null){
