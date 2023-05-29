@@ -23,14 +23,31 @@ class Istituzione {
 }
 
 class Gestionale{
-    constructor(nome){
-        this.nome = nome;
-        this.istituzioni = [];
+  constructor(nome){
+    this.nome = nome;
+    this.istituzioni = [];
+  }
+  registraIstituzione(nome_istituzione){
+    let verifica_istituzioni = this.istituzioni;
+    if (verifica_istituzioni.length == 0){
+      let nuova_istituzione = new Istituzione(nome_istituzione);
+      this.istituzioni.push(nuova_istituzione);
+      console.log("Istituzione " + nome_istituzione + " registrata");
+    } else {
+      let verifica_nome = verifica_istituzioni.find(function(i) { return i.nome === nome_istituzione });	
+      if (verifica_nome) {
+        console.log("Istituzione gia presente");
+      } else {
+        let nuova_istituzione = new Istituzione(nome_istituzione);
+        this.istituzioni.push(nuova_istituzione);
+        console.log("Istituzione " + nome_istituzione + " registrata");
+      }
     }
-    inserisciIstituzione(nome_instituzione){
-        //
-    }
+    console.log(this.istituzioni);
+  }
 }
+
+let gestionale = new Gestionale("Gestionale");
 
 // Esportazione in formato JSON
 function esporta(istituzione) {
@@ -50,12 +67,9 @@ function importa(nomeIstituzione) {
   return importedIstituzione;
 }
 
-let gestionale = new Gestionale("Gestionale");
-let istituzioni = [];
-
 while (true) {
   console.log("Seleziona un'opzione:");
-  console.log("1. Aggiungi un'istituzione");
+  console.log("1. Registra un'istituzione");
   console.log("2. Aggiungi una persona a un'istituzione");
   console.log("3. Esporta un'istituzione in formato JSON");
   console.log("4. Importa un'istituzione da formato JSON");
@@ -63,8 +77,8 @@ while (true) {
   const choice = prompt("Scelta: ");
   switch (choice) {
     case "1":
-      const nomeIstituzione = prompt("Inserisci il nome dell'istituzione: ");
-      gestionale.inserisciIstituzione(nomeIstituzione);
+      let nome_istituzione = prompt("Inserisci il nome dell'istituzione: ");
+      gestionale.registraIstituzione(nome_istituzione);
       break;
     case "2":
       const nomeIstituzioneDaAggiungere = prompt("Inserisci il nome dell'istituzione a cui aggiungere una persona: ");
