@@ -34,7 +34,7 @@ class Gestionale{
       this.istituzioni.push(nuova_istituzione);
       console.log("Istituzione " + nome_istituzione + " registrata");
     } else {
-      let verifica_nome = verifica_istituzioni.find(function(i) { return i.nome === nome_istituzione });	
+      let verifica_nome = verifica_istituzioni.find(function(i) { return i.nome === nome_istituzione });
       if (verifica_nome) {
         console.log("Istituzione gia presente");
       } else {
@@ -44,6 +44,27 @@ class Gestionale{
       }
     }
     console.log(this.istituzioni);
+  }
+  aggiungiPersona(nome_istituzione){
+    let verifica_istituzioni = this.istituzioni;
+    if (verifica_istituzioni.length > 0){
+      let verifica_nome = verifica_istituzioni.find(function(i) { return i.nome === nome_istituzione });
+      if (verifica_nome){
+        let index = verifica_istituzioni.findIndex(object => {
+          return object.nome === nome_istituzione;
+        });
+        let nome = prompt("Inserisci il nome della persona : ");
+        let cognome = prompt("Inserisci il cognome della persona : ");
+        let data_nascita = prompt("Inserisci la data di nascita della persona : ");
+        let persona = new Persona(nome, cognome, data_nascita);
+        this.istituzioni[index].aggiungiPersona(persona);
+        console.log(this.istituzioni);
+      } else {
+        console.log("Istituzione non registrata con questo nome : " + nome_istituzione);
+      }
+    } else {
+      console.log("Registra prima l'istituzione...");
+    }
   }
 }
 
@@ -81,18 +102,9 @@ while (true) {
       gestionale.registraIstituzione(nome_istituzione);
       break;
     case "2":
-      const nomeIstituzioneDaAggiungere = prompt("Inserisci il nome dell'istituzione a cui aggiungere una persona: ");
-      const istituzioneDaAggiungere = istituzioni.find(function(i) { return i.nome === nomeIstituzioneDaAggiungere });
-      if (istituzioneDaAggiungere) {
-        const nomePersona = prompt('Inserisci il nome della persona: ');
-        const cognomePersona = prompt('Inserisci il cognome della persona: ');
-        const dataNascitaPersona = prompt('Inserisci la data di nascita della persona: ');
-        const nuovaPersona = new Persona(nomePersona, cognomePersona, dataNascitaPersona);
-        istituzioneDaAggiungere.aggiungiPersona(nuovaPersona);
-        console.log('Persona "' + nomePersona + ' ' + cognomePersona + '" aggiunta all\'istituzione "' + nomeIstituzioneDaAggiungere + '".');
-      } else {
-        console.log('Nessuna istituzione trovata con il nome "' + nomeIstituzioneDaAggiungere + '".');
-      }
+      let nome_istituzione_persona = prompt("Inserisci il nome dell'istituzione: ");
+      gestionale.aggiungiPersona(nome_istituzione_persona);
+      console.log("Persona aggiunta al personale dell'istituzione " + nome_istituzione_persona);
       break;
     case "3":
       const nomeIstituzionedaEsportare = prompt("Inserisci il nome dell'istituzioneda esportare in formato JSON: ");
