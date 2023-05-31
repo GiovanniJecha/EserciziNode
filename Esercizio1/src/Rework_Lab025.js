@@ -66,27 +66,39 @@ class Gestionale{
       console.log("Registra prima l'istituzione...");
     }
   }
+  esportaIstituzione(nome_istituzione){
+    let verifica_istituzioni = this.istituzioni;
+    let verifica_nome = verifica_istituzioni.find(function(i) { return i.nome === nome_istituzione });
+    if (verifica_nome){
+      let index = verifica_istituzioni.findIndex(object => {
+        return object.nome === nome_istituzione;
+      });
+      let jsonContent = JSON.stringify(verifica_istituzioni[index]);
+      fs.writeFileSync(verifica_istituzioni[index].nome + '.json', jsonContent);
+    } else {
+      console.log("Istituzione non trovata...");
+      console.log(this.istituzioni);
+    }
+  }
+  importedIstituzione(nome_istituzione){
+    let jsonImport = fs.readFileSync(nome_istituzione + '.json', 'utf8');
+    let imported_istituzione_data = JSON.parse(jsonImport);
+    let imported_istituzione = new Istituzione(imported_istituzione_data.nome);
+    imported_istituzione_data.personale.forEach(function(persona_data) {
+      let imported_persona = new Persona(persona_data.nome, persona_data.cognome, persona_data.data_nascita);
+      imported_istituzione.aggiungiPersona(imported_persona);
+    });
+    try {
+      this.istituzioni.push(imported_istituzione);
+      console.log('Istituzione "' + nome_istituzione + '" importata da formato JSON.');
+    } catch (error) {
+      console.log('Errore durante l\'importazione dell\'istituzione "' + imported_istituzione + '" da formato JSON.');
+    }
+    console.log(this.istituzioni);
+  }
 }
 
 let gestionale = new Gestionale("Gestionale");
-
-// Esportazione in formato JSON
-function esporta(istituzione) {
-  const jsonContent = JSON.stringify(istituzione);
-  fs.writeFileSync(istituzione.nome + '.json', jsonContent);
-}
-
-// Importazione da formato JSON
-function importa(nomeIstituzione) {
-  const jsonImport = fs.readFileSync(nomeIstituzione + '.json', 'utf8');
-  const importedIstituzioneData = JSON.parse(jsonImport);
-  const importedIstituzione = new Istituzione(importedIstituzioneData.nome);
-  importedIstituzioneData.personale.forEach(function(personaData) {
-    const importedPersona = new Persona(personaData.nome, personaData.cognome, personaData.data_nascita);
-    importedIstituzione.aggiungiPersona(importedPersona);
-  });
-  return importedIstituzione;
-}
 
 while (true) {
   console.log("Seleziona un'opzione:");
@@ -107,24 +119,12 @@ while (true) {
       console.log("Persona aggiunta al personale dell'istituzione " + nome_istituzione_persona);
       break;
     case "3":
-      const nomeIstituzionedaEsportare = prompt("Inserisci il nome dell'istituzioneda esportare in formato JSON: ");
-      const istituzionedaEsportare = istituzioni.find(function(i) { return i.nome === nomeIstituzionedaEsportare });
-      if (istituzionedaEsportare) {
-        esporta(istituzionedaEsportare);
-        console.log('Istituzione "' + nomeIstituzionedaEsportare + '" esportata in formato JSON.');
-      } else {
-        console.log('Nessuna istituzione trovata con il nome "' + nomeIstituzionedaEsportare + '".');
-      }
+      let nome_istituzione_esportare = prompt("Inserisci il nome dell'istituzione da esportare in formato JSON: ");
+      gestionale.esportaIstituzione(nome_istituzione_esportare);
       break;
     case "4":
-      const nomeIstituzionedaImportare = prompt("Inserisci il nome dell'istituzioneda importare da formato JSON: ");
-      try {
-        const istituzionedaImportare = importa(nomeIstituzionedaImportare);
-        istituzioni.push(istituzionedaImportare);
-        console.log('Istituzione "' + nomeIstituzionedaImportare + '" importata da formato JSON.');
-      } catch (error) {
-        console.log('Errore durante l\'importazione dell\'istituzione "' + nomeIstituzionedaImportare + '" da formato JSON.');
-      }
+      let nome_istituzione_importare = prompt("Inserisci il nome dell'istituzione da importare da formato JSON: ");
+      gestionale.importedIstituzione(nome_istituzione_importare);
       break;
     case "0":
       console.log("Programma terminato.");
