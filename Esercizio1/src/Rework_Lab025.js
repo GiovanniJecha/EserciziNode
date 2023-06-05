@@ -89,7 +89,12 @@ class Gestionale{
         console.log("Istituzione già presente.");
       } else {
         let nuova_istituzione = new Istituzione(importedIstituzione.nome);
-        nuova_istituzione.personale = importedIstituzione.personale.map(persona => new Persona(persona.nome, persona.cognome, persona.data_nascita));
+        nuova_istituzione.personale = [];
+          for (let i = 0; i < importedIstituzione.personale.length; i++) {
+            let persona = importedIstituzione.personale[i];
+            let nuova_persona = new Persona(persona.nome, persona.cognome, persona.data_nascita);
+            nuova_istituzione.personale.push(nuova_persona);
+        }  
         this.istituzioni.push(nuova_istituzione);
         console.log("Istituzione " + nome_istituzione + " importata con successo.");
       }
