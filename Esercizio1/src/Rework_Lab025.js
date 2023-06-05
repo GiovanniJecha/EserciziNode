@@ -1,30 +1,33 @@
 const prompt = require('prompt-sync')();
 const fs = require('fs');
- class Persona {
+
+class Persona {
   constructor(nome, cognome, data_nascita) {
     this.nome = nome;
     this.cognome = cognome;
     this.data_nascita = data_nascita;
   }
-   toString() {
+  toString() {
     return 'Nome : ' + this.nome + '\nCognome : ' + this.cognome + '\nData nascita : ' + this.data_nascita;
   }
 }
- class Istituzione {
+
+class Istituzione {
   constructor(nome) {
     this.nome = nome;
     this.personale = [];
   }
-   aggiungiPersona(persona) {
+  aggiungiPersona(persona) {
     this.personale.push(persona);
   }
 }
- class Gestionale {
+
+class Gestionale {
   constructor(nome) {
     this.nome = nome;
     this.istituzioni = [];
   }
-   registraIstituzione(nome_istituzione) {
+  registraIstituzione(nome_istituzione) {
     let verifica_istituzioni = this.istituzioni;
     if (verifica_istituzioni.length == 0) {
       let nuova_istituzione = new Istituzione(nome_istituzione);
@@ -42,7 +45,7 @@ const fs = require('fs');
     }
     console.log(this.istituzioni);
   }
-   aggiungiPersona(nome_istituzione) {
+  aggiungiPersona(nome_istituzione) {
     let verifica_istituzioni = this.istituzioni;
     if (verifica_istituzioni.length > 0) {
       let verifica_nome = verifica_istituzioni.find(function (i) { return i.nome === nome_istituzione });
@@ -63,7 +66,7 @@ const fs = require('fs');
       console.log("Registra prima l'istituzione...");
     }
   }
-   esportaIstituzione(nome_istituzione) {
+  esportaIstituzione(nome_istituzione) {
     let verifica_istituzioni = this.istituzioni;
     let verifica_nome = verifica_istituzioni.find(function (i) { return i.nome === nome_istituzione });
     if (verifica_nome) {
@@ -77,7 +80,7 @@ const fs = require('fs');
       console.log(this.istituzioni);
     }
   }
-   importaIstituzione(nome_istituzione) {
+  importaIstituzione(nome_istituzione) {
     try {
       let jsonContent = fs.readFileSync(nome_istituzione + '.json', 'utf8');
       let importedIstituzione = JSON.parse(jsonContent);
@@ -99,7 +102,7 @@ const fs = require('fs');
       console.log("Errore durante l'importazione dell'istituzione: " + error.message);
     }
   }
-   visualizzaPersonale(nome_istituzione) {
+  visualizzaPersonale(nome_istituzione) {
     let verifica_istituzioni = this.istituzioni;
     if (verifica_istituzioni.length > 0) {
       let verifica_nome = verifica_istituzioni.find(function (i) { return i.nome === nome_istituzione });
@@ -117,8 +120,10 @@ const fs = require('fs');
     }
   }
 }
- let gestionale = new Gestionale("Gestionale");
- while (true) {
+
+let gestionale = new Gestionale("Gestionale");
+
+while (true) {
   console.log("Seleziona un'opzione:");
   console.log("1. Registra un'istituzione");
   console.log("2. Aggiungi una persona a un'istituzione");
@@ -128,31 +133,31 @@ const fs = require('fs');
   console.log("0. Esci");
   const choice = prompt("Scelta: ");
   switch (choice) {
-    case "1":
-      let nome_istituzione = prompt("Inserisci il nome dell'istituzione: ");
-      gestionale.registraIstituzione(nome_istituzione);
-      break;
-    case "2":
-      let nome_istituzione_persona = prompt("Inserisci il nome dell'istituzione: ");
-      gestionale.aggiungiPersona(nome_istituzione_persona);
-      console.log("Persona aggiunta al personale dell'istituzione " + nome_istituzione_persona);
-      break;
-    case "3":
-      let nome_istituzione_esportare = prompt("Inserisci il nome dell'istituzione da esportare in formato JSON: ");
-      gestionale.esportaIstituzione(nome_istituzione_esportare);
-      break;
-    case "4":
-      let nome_istituzione_importare = prompt("Inserisci il nome dell'istituzione da importare da formato JSON: ");
-      gestionale.importaIstituzione(nome_istituzione_importare);
-      break;
-    case "5":
-      let nome_istituzione_personale = prompt("Inserisci il nome dell'istituzione: ");
-      gestionale.visualizzaPersonale(nome_istituzione_personale);
-      break;
-    case "0":
-      console.log("Programma terminato.");
-      process.exit(0);
-    default:
-      console.log("Scelta non valida.");
+  case "1":
+    let nome_istituzione = prompt("Inserisci il nome dell'istituzione: ");
+    gestionale.registraIstituzione(nome_istituzione);
+    break;
+  case "2":
+    let nome_istituzione_persona = prompt("Inserisci il nome dell'istituzione: ");
+    gestionale.aggiungiPersona(nome_istituzione_persona);
+    console.log("Persona aggiunta al personale dell'istituzione " + nome_istituzione_persona);
+    break;
+  case "3":
+    let nome_istituzione_esportare = prompt("Inserisci il nome dell'istituzione da esportare in formato JSON: ");
+    gestionale.esportaIstituzione(nome_istituzione_esportare);
+    break;
+  case "4":
+    let nome_istituzione_importare = prompt("Inserisci il nome dell'istituzione da importare da formato JSON: ");
+    gestionale.importaIstituzione(nome_istituzione_importare);
+    break;
+  case "5":
+    let nome_istituzione_personale = prompt("Inserisci il nome dell'istituzione: ");
+    gestionale.visualizzaPersonale(nome_istituzione_personale);
+    break;
+  case "0":
+    console.log("Programma terminato.");
+    process.exit(0);
+  default:
+    console.log("Scelta non valida.");
   }
 }
