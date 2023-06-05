@@ -97,6 +97,23 @@ class Gestionale{
       console.log("Errore durante l'importazione dell'istituzione: " + error.message);
     }
   }
+  visualizzaPersonale(nome_istituzione){
+    let verifica_istituzioni = this.istituzioni;
+    if (verifica_istituzioni.length > 0){
+      let verifica_nome = verifica_istituzioni.find(function(i) { return i.nome === nome_istituzione });
+      if (verifica_nome){
+        let index = verifica_istituzioni.findIndex(object => {
+          return object.nome === nome_istituzione;
+        });
+        let personale = this.istituzioni[index].personale;
+        console.log(personale);
+      } else {
+        console.log("Istituzione non registrata con questo nome : " + nome_istituzione);
+      }
+    } else {
+      console.log("Registra prima l'istituzione...");
+    }
+  }
 }
 
 let gestionale = new Gestionale("Gestionale");
@@ -107,6 +124,7 @@ while (true) {
   console.log("2. Aggiungi una persona a un'istituzione");
   console.log("3. Esporta un'istituzione in formato JSON");
   console.log("4. Importa un'istituzione da formato JSON");
+  console.log("5. Visulizza l'elenco del personale di una istituzione");
   console.log("0. Esci");
   const choice = prompt("Scelta: ");
   switch (choice) {
@@ -126,6 +144,10 @@ while (true) {
     case "4":
       let nome_istituzione_importare = prompt("Inserisci il nome dell'istituzione da importare da formato JSON: ");
       gestionale.importaIstituzione(nome_istituzione_importare);
+      break;
+    case "5":
+      let nome_istituzione_personale = prompt("Inserisci il nome dell'istituzione: ");
+      gestionale.visualizzaPersonale(nome_istituzione_personale);
       break;
     case "0":
       console.log("Programma terminato.");
