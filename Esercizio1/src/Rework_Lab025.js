@@ -80,8 +80,22 @@ class Gestionale{
       console.log(this.istituzioni);
     }
   }
-  importedIstituzione(nome_istituzione){
-    //
+  importaIstituzione(nome_istituzione) {
+    try {
+      let jsonContent = fs.readFileSync(nome_istituzione + '.json', 'utf8');
+      let importedIstituzione = JSON.parse(jsonContent);
+      let verifica_nome = this.istituzioni.find(function(i) { return i.nome === nome_istituzione });
+      if (verifica_nome) {
+        console.log("Istituzione già presente.");
+      } else {
+        let nuova_istituzione = new Istituzione(importedIstituzione.nome);
+        nuova_istituzione.personale = importedIstituzione.personale.map(persona => new Persona(persona.nome, persona.cognome, persona.data_nascita));
+        this.istituzioni.push(nuova_istituzione);
+        console.log("Istituzione " + nome_istituzione + " importata con successo.");
+      }
+    } catch (error) {
+      console.log("Errore durante l'importazione dell'istituzione: " + error.message);
+    }
   }
 }
 
@@ -111,7 +125,7 @@ while (true) {
       break;
     case "4":
       let nome_istituzione_importare = prompt("Inserisci il nome dell'istituzione da importare da formato JSON: ");
-      gestionale.importedIstituzione(nome_istituzione_importare);
+      gestionale.importaIstituzione(nome_istituzione_importare);
       break;
     case "0":
       console.log("Programma terminato.");
