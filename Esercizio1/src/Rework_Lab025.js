@@ -81,20 +81,7 @@ class Gestionale{
     }
   }
   importedIstituzione(nome_istituzione){
-    let jsonImport = fs.readFileSync(nome_istituzione + '.json', 'utf8');
-    let imported_istituzione_data = JSON.parse(jsonImport);
-    let imported_istituzione = new Istituzione(imported_istituzione_data.nome);
-    imported_istituzione_data.personale.forEach(function(persona_data) {
-      let imported_persona = new Persona(persona_data.nome, persona_data.cognome, persona_data.data_nascita);
-      imported_istituzione.aggiungiPersona(imported_persona);
-    });
-    try {
-      this.istituzioni.push(imported_istituzione);
-      console.log('Istituzione "' + nome_istituzione + '" importata da formato JSON.');
-    } catch (error) {
-      console.log('Errore durante l\'importazione dell\'istituzione "' + imported_istituzione + '" da formato JSON.');
-    }
-    console.log(this.istituzioni);
+    //
   }
 }
 
